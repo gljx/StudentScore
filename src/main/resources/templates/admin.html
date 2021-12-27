@@ -1,0 +1,260 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="/js/chart.min.js"></script>
+<script type="module" src="/js/plugin.filler.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<script>
+    function del(uuid){
+            var xhq = new XMLHttpRequest();
+            xhq.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert("delete"+this.responseText);
+                    location.reload();
+                }
+            };
+            xhq.open("POST", "/panel/admin/del/"+uuid, true);
+            xhq.send();
+        }
+    function update(old_uuid){
+        var valueOfUUID= document.getElementById("uuid"+old_uuid).value;
+        var valueOfName= document.getElementById("name"+old_uuid).value;
+        var valueOfPhone= document.getElementById("phone"+old_uuid).value;
+        var valueOfPWD= document.getElementById("pwd"+old_uuid).value;
+        var xhq = new XMLHttpRequest();
+        xhq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("update"+this.responseText);
+                location.reload();
+            }
+        };
+        xhq.open("POST", "/panel/admin/update/"+old_uuid, true);
+        xhq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhq.send("old_UUID="+old_uuid+"&UUID="+valueOfUUID+"&name="+valueOfName+"&phone_num="+valueOfPhone+"&password="+valueOfPWD);
+    }
+
+    function add(){
+        var new_valueOfName= document.getElementById("new_name").value;
+        var new_valueOfPhone= document.getElementById("new_phone_num").value;
+        var new_valueOfPWD= document.getElementById("new_password").value;
+        var xhq = new XMLHttpRequest();
+        xhq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("add "+this.responseText);
+                location.reload();
+            }
+        };
+        xhq.open("POST", "/panel/admin/add", true);
+        xhq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhq.send("name="+new_valueOfName+"&phone_num="+new_valueOfPhone+"&password="+new_valueOfPWD);
+    }
+
+    function addExam(){
+        var new_valueOfExamName= document.getElementById("new_exam_name").value;
+        var new_valueOfCode= document.getElementById("new_code").value;
+        var xhq = new XMLHttpRequest();
+        xhq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("add "+this.responseText);
+                location.reload();
+            }
+        };
+        xhq.open("POST", "/panel/exam/add", true);
+        xhq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhq.send("exam_name="+new_valueOfExamName+"&code="+new_valueOfCode);
+    }
+
+    function delExam(uuid){
+        var xhq = new XMLHttpRequest();
+        xhq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("delete"+this.responseText);
+                location.reload();
+            }
+        };
+        xhq.open("POST", "/panel/exam/del/"+uuid, true);
+        xhq.send();
+    }
+
+    function updateExam(old_UUID){
+        var valueOfUUID= document.getElementById("exam_uuid"+old_UUID).value;
+        var valueOfExamName= document.getElementById("exam_name"+old_UUID).value;
+        var valueOfCode= document.getElementById("code"+old_UUID).value;
+        var xhq = new XMLHttpRequest();
+        xhq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("update"+this.responseText);
+                location.reload();
+            }
+        };
+        xhq.open("POST", "/panel/exam/update/"+old_UUID, true);
+        xhq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhq.send("old_UUID="+old_UUID+"&UUID="+valueOfUUID+"&exam_name="+valueOfExamName+"&code="+valueOfCode);
+    }
+
+</script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{index::pageHeader}">
+</div>
+    <a href="/score/query/allscore">
+    <div class="container-fluid">
+        <div class="container mt-3">
+            <h2>选项卡切换</h2>
+            <br>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link " th:classappend=" ${pageType}=='管理员用户管理'?'active':''" href="/panel/admin/query">管理员</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" th:classappend=" ${pageType}=='分数管理'?'active':''" href="/panel/score/query">分数</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  th:classappend=" ${pageType}=='学生管理'?'active':''"  href="/panel/student/query">学生</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend=" ${pageType}=='教师管理'?'active':''" href="/panel/teacher/query">教师</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pageType}=='考试管理'?'active':''"  href="/panel/exam/query">考试</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#other">其它</a>
+                </li>
+
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div id="admin" class="container tab-pane" th:classappend=" ${pageType}=='管理员用户管理'?'active':''"><br>
+                    <table class="table caption-top table-striped table-Warning table-hover">
+                        <caption class="display-5" >管理员列表</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">序号</th>
+                            <th scope="col">UUID</th>
+                            <th scope="col">姓名</th>
+                            <th scope="col">手机号</th>
+                            <th scope="col">密码</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="admin:${admins}">
+                            <td th:text="${adminStat.index+1}"></td>
+                            <td><input type="text" class="form-control" th:id="uuid+(${admin.UUID})" th:value="${admin.UUID}"/></td>
+                            <td><input type="text" class="form-control" th:id="name+(${admin.UUID})" th:value="${admin.name}"/></td>
+                            <td><input type="text" class="form-control" th:id="phone+(${admin.UUID})" th:value="${admin.phone_num}"/></td>
+                            <td><input type="text" class="form-control" th:id="pwd+(${admin.UUID})" th:value="${admin.password}"/></td>
+                            <td><button type="button" class="btn btn-warning" th:onclick="update([[${admin.UUID}]])">更新本条</button></td>
+                            <td><button type="button" class="btn btn-danger" th:onclick="del([[${admin.UUID}]])" th:text="'删除'+${admin.name}"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="table-active" colspan="3"><input type="text" class="form-control"  id="new_name" placeholder="new_name"/></td>
+                            <td><input type="tel" class="form-control" id="new_phone_num" placeholder="new_phone_num"/></td>
+                            <td><input type="text" class="form-control" id="new_password" placeholder="new_password"/></td>
+                            <td><button type="button" class="btn btn-success" onclick="add()">增加管理员</button> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="score" class="container tab-pane" th:classappend=" ${pageType}=='分数管理'?'active':''" ><br>
+                    <h3>分数管理</h3>
+                    <div>
+                        <table class="table caption-top table-striped table-Warning table-hover">
+                            <caption class="display-5" th:text="${scores!=null?scores[0].examName:''}+'成绩'"></caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">名次</th>
+                                <th scope="col">考号</th>
+                                <th scope="col">姓名</th>
+                                <th scope="col">语文</th>
+                                <th scope="col">数学</th>
+                                <th scope="col">英语</th>
+                                <th scope="col">政治</th>
+                                <th scope="col">历史</th>
+                                <th scope="col">生物</th>
+                                <th scope="col">地理</th>
+                                <th scope="col">物理</th>
+                                <th scope="col">化学</th>
+                                <th scope="col">总分</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:with="chineseScore=0.0,mathScore=0.0,englishScore=0.0"  th:each="score:${scores}">
+                                <td th:text="${scoreStat.index+1}"></td>
+                                <td th:text="${score.examID}"></td>
+                                <td th:text="${score.name}"></td>
+                                <td th:text="${score.chinese}"></td>
+                                <td th:text="${score.mathScore}"></td>
+                                <td th:text="${score.english}"></td>
+                                <td th:text="${score.politics}"></td>
+                                <td th:text="${score.history_score}"></td>
+                                <td th:text="${score.biology}"></td>
+                                <td th:text="${score.geography}"></td>
+                                <td th:text="${score.physics}"></td>
+                                <td th:text="${score.chemistry}"></td>
+                                <th th:text="${score.chinese+score.mathScore+score.english+score.politics+score.history_score+score.biology+score.geography+score.physics+score.chemistry}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="student" class="container tab-pane" th:classappend=" ${pageType}=='学生管理'?'active':''" ><br>
+                    <h3>学生管理</h3>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <canvas id="BarChartCanvas" ></canvas>
+                </div>
+                <div id="teacher" class="container tab-pane" th:classappend=" ${pageType}=='教师管理'?'active':''"><br>
+                    <h3>教师管理</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                </div>
+                <div id="exam" class="container tab-pane" th:classappend="${pageType}=='考试管理'?'active':''"><br>
+                    <h3>考试场次管理</h3>
+                    <p>在此处管理考试场次</p>
+                    <table class="table caption-top table-striped table-Warning table-hover">
+                        <caption class="display-5" >考试场次</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">序号</th>
+                            <th scope="col">UUID</th>
+                            <th scope="col">考试名称</th>
+                            <th scope="col">考试所属代码</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="exam:${exams}">
+                            <td th:text="${examStat.index+1}"></td>
+                            <td><input type="text" class="form-control" th:id="exam_uuid+(${exam.UUID})" th:value="${exam.UUID}"/></td>
+                            <td><input type="text" class="form-control" th:id="exam_name+(${exam.UUID})" th:value="${exam.exam_name}"/></td>
+                            <td><input type="text" class="form-control" th:id="code+(${exam.UUID})" th:value="${exam.code}"/></td>
+                            <td><button type="button" class="btn btn-warning" th:onclick="updateExam([[${exam.UUID}]])">更新本条</button></td>
+                            <td><button type="button" class="btn btn-danger" th:onclick="delExam([[${exam.UUID}]])" th:text="'删除'+${exam.exam_name}"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="table-active" colspan="3"><input type="text" class="form-control"  id="new_exam_name" placeholder="new_exam_name"/></td>
+                            <td><input type="text" class="form-control" id="new_code" placeholder="new_code"/></td>
+                            <td><button type="button" class="btn btn-success" onclick="addExam()">增加一场考试</button> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div id="other" class="container tab-pane" ><br>
+                    <h3>环形图</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<div >
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="moe.nijigen.studentscore.Pojo.Mapper.ScoreMapper">
+    <insert id="insertScore" parameterType="Score" parameterMap="scoreLogParameter">
+        insert into score(uuid,student_name,id_num,studyNum,examID,exam_name,grade,stu_Class,chinese,math_score,english,physics,politics,chemistry,history_score,biology,geography) values(#{UUID},#{name},#{idNum},#{studyNum},#{examID},#{examName},#{grade},#{stuClass},#{chinese},#{mathScore},#{english},#{physics},#{politics},#{chemistry},#{history_score},#{biology},#{geography})
+    </insert>
+
+    <delete id="deleteScore" parameterType="String" parameterMap="scoreLogParameter">
+        delete from score where uuid=#{uuid}
+    </delete>
+
+    <update id="updateScore" parameterType="Score" parameterMap="scoreLogParameter">
+        update score set uuid=#{score.UUID},name=#{score.name},idNum=#{score.idNum},studyNum=#{score.studyNum},examID=#{score.examID},examName=#{score.examName},grade=#{score.grade},stuClass=#{score.stuClass},chinese=#{score.chinese},mathScore=#{score.mathScore},english=#{score.english},physics=#{score.physics},politics=#{score.politics},chemistry=#{score.chemistry},history_score=#{score.history_score},biology=#{score.biology},geography=#{score.geography}
+    </update>
+
+    <select id="querySchoolAllStudentScore" resultType="List">
+        select * from score
+    </select>
+
+    <select id="queryGradeAllStudentScore" resultType="List" parameterType="Integer">
+        select * from score where grade=#{grade}
+    </select>
+    
+    <select id="queryClassAllStudentScore" resultMap="scoreLog" resultType="Score">
+        select * from score where grade=#{grade} and stu_Class=#{stu_Class} and exam_name=#{exam_name}
+    </select>
+    
+    <select id="queryClassAllStudentScoreByExamName" resultType="Score">
+        select * from score where grade=#{grade} and exam_name=#{exam_name}
+    </select>
+
+    <select id="queryScoreByName" resultType="List" parameterType="String">
+        select * from score where student_name=#{name}
+    </select>
+
+    <select id="queryScoreByID" resultType="Score" resultMap="scoreLog" parameterType="Integer">
+        select * from score where id=#{id}
+    </select>
+
+    <select id="queryScoreByAndByExamName" resultType="Score" resultMap="scoreLog">
+        select * from score where id=#{id} and exam_name=#{exam_name}
+    </select>
+
+    <select id="queryAllScore" resultType="Score" resultMap="scoreLog">
+        select * from score
+    </select>
+    <resultMap id="scoreLog" type="Score">
+        <id property="UUID" column="uuid"/>
+        <result property="name" column="student_name"/>
+        <result property="idNum" column="id_num"/>
+        <result property="studyNum" column="studyNum"/>
+        <result property="examID" column="examID"/>
+        <result property="examName" column="exam_name"/>
+        <result property="grade" column="grade"/>
+        <result property="stuClass" column="stu_Class"/>
+        <result property="chinese" column="chinese"/>
+        <result property="mathScore" column="math_score"/>
+        <result property="english" column="english"/>
+        <result property="physics" column="physics"/>
+        <result property="politics" column="politics"/>
+        <result property="chemistry" column="chemistry"/>
+        <result property="history_score" column="history_score"/>
+        <result property="biology" column="biology"/>
+        <result property="geography" column="geography"/>
+    </resultMap>
+
+    <parameterMap id="scoreLogParameter" type="Score">
+        <parameter property="UUID" resultMap="scoreLog"/>
+        <parameter property="name" resultMap="scoreLog"/>
+        <parameter property="idNum" resultMap="scoreLog"/>
+        <parameter property="studyNum" resultMap="scoreLog"/>
+        <parameter property="examID" resultMap="scoreLog"/>
+        <parameter property="examName" resultMap="scoreLog"/>
+        <parameter property="grade" resultMap="scoreLog"/>
+        <parameter property="stuClass" resultMap="scoreLog"/>
+        <parameter property="chinese" resultMap="scoreLog"/>
+        <parameter property="mathScore" resultMap="scoreLog"/>
+        <parameter property="english" resultMap="scoreLog"/>
+        <parameter property="physics" resultMap="scoreLog"/>
+        <parameter property="politics" resultMap="scoreLog"/>
+        <parameter property="chemistry" resultMap="scoreLog"/>
+        <parameter property="history_score" resultMap="scoreLog"/>
+        <parameter property="biology" resultMap="scoreLog"/>
+        <parameter property="geography" resultMap="scoreLog"/>
+    </parameterMap>
+</mapper>

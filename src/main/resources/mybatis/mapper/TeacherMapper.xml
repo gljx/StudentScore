@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="moe.nijigen.studentscore.Pojo.Mapper.TeacherMapper">
+    <resultMap id="TeacherLog" type="Teacher">
+        <id property="UUID" column="uuid"/>
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phoneNum" column="phone_num"/>
+    </resultMap>
+    <parameterMap id="TeacherLogParam" type="Teacher">
+        <parameter property="UUID" resultMap="TeacherLog"/>
+        <parameter property="name" resultMap="TeacherLog"/>
+        <parameter property="password" resultMap="TeacherLog"/>
+        <parameter property="phoneNum" resultMap="TeacherLog"/>
+    </parameterMap>
+    <select id="loginTeacher" parameterMap="TeacherLogParam" resultMap="TeacherLog" resultType="Teacher">
+        select * from teacher where name=#{name} and password=#{password}
+    </select>
+    <select id="queryAllTeacher" resultMap="TeacherLog" resultType="Teacher">
+        select * from teacher
+    </select>
+    <select id="queryByName" resultMap="TeacherLog">
+        select * from teacher where name=#{name}
+    </select>
+
+</mapper>

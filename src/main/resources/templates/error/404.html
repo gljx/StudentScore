@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <script src="/js/bootstrap.bundle.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/js/popper.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./js/chart.min.js"></script>
+    <script type="module" src="./js/plugin.filler.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-reboot.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <script type="text/javascript"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="jumbotron bg-primary " th:fragment="pageHeader" >
+        <h1 class="display-4"  >坝河九年制学校学生成绩管理系统</h1>
+        <p class="lead ">欢迎访问</p>
+        <div class="alert alert-danger" role="alert">
+           404 Not Found
+        </div>
+        <div class="alert alert-danger" role="alert">
+            你请求的页面为在服务器找到
+        </div>
+        <hr class="my-4">
+
+
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-danger me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#login_modal" >登录</button>
+    </div>
+</body>
+</html>

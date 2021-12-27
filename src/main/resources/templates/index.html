@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="/js/chart.min.js"></script>
+    <script type="module" src="/js/plugin.filler.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript">
+
+
+
+</script>
+
+</head>
+<body>
+<div class="container">
+	<div class="jumbotron bg-primary " th:fragment="pageHeader" >
+        <h1 class="display-4"  >坝河九年制学校学生成绩管理系统</h1>
+        <p class="lead ">欢迎访问<span th:text="${username}"></span></p>
+        <p th:text="${loginMsg}"></p>
+        <hr class="my-4"/>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-info me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#login_modal" >登录</button>
+            <button class="btn btn-danger me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#admin_modal" >登录</button>
+        </div>
+    </div>
+
+
+	<div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="login_modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="login_modal">请输入账号和密码进行登录</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+			<form action="/login" method="post">
+				<div class="mb-3">
+					<label for="username" class="form-label">用户名</label>
+					<input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp">
+					<div id="usernameHelp" class="form-text">请输入手机号</div>
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label">密码</label>
+					<input type="password" name="password" class="form-control" id="password">
+					<div id="passwordHelp" class="form-text">请输入密码</div>
+				</div>
+				<button id="loginBtn" type="submit"  class="btn btn-primary" data-bs-dismiss="modal">登录</button>
+			</form>
+
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="modal fade" id="admin_modal" tabindex="-1" aria-labelledby="login_modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="admin_modal">请输入账号和密码进行登录</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/adminlog" method="post">
+                        <div class="mb-3">
+                            <label for="adminname" class="form-label">用户名</label>
+                            <input type="text" name="adminname" class="form-control" id="adminname" aria-describedby="adminname">
+                            <div id="adminnameHelp" class="form-text">请输入手机号</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">密码</label>
+                            <input type="password" name="password" class="form-control" id="password">
+                            <div id="passwordHelp" class="form-text">请输入密码</div>
+                        </div>
+                        <button id="adminBtn" type="submit"  class="btn btn-primary" data-bs-dismiss="modal">登录</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <footer class="py-5 align-content-center" th:fragment="footer" >
+        <p class="text-center text-muted text-info">Copyright © 2021-2022,nijigen.moe,All Rights Reserved</p>
+    </footer>
+</div>
+</body>
+
+</html>

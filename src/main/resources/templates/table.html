@@ -1,0 +1,136 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="/js/chart.min.js"></script>
+<script type="module" src="/js/plugin.filler.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function importExcel(){
+            console.log("upload data");
+            var fileObj = document.getElementById("excel").files[0];
+            var code=document.getElementById("code").value;
+            var exam_name=document.getElementById("exam_name").value
+            var path="/upload/excel";
+            var form = new FormData();
+            form.append("code",code);
+            form.append("exam_name",exam_name);
+            form.append("file",fileObj);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST",path,true);
+            xhr.onreadystatechange=function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert("upload "+this.responseText);
+                    location.reload();
+                }
+            }
+            xhr.send(form);
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{index::pageHeader}">
+</div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link " th:classappend=" ${pageType}=='表格'?'active':''" href="/score/list">表格显示</a>
+        </li>
+        <li class="nav-item" >
+            <a class="nav-link" th:classappend=" ${pageType}=='柱状图'?'active':''" href="/score/bar">柱状图</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"  th:classappend=" ${pageType}=='线形图'?'active':''"  href="/panel/student/query">线形图</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend=" ${pageType}=='教师管理'?'active':''" href="/panel/teacher/query">教师</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageType}=='考试管理'?'active':''"  href="/panel/exam/query">考试</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#other">其它</a>
+        </li>
+
+    </ul>
+    <div id="table" class="container tab-pane" th:classappend=" ${pageType}=='表格'?'active':''" ><br>
+        <div>
+            <table class="table caption-top table-striped table-Warning table-hover">
+                <caption class="display-5" th:text="${scores!=null?scores[0].examName:''}+'成绩'"></caption>
+                <thead>
+                <tr>
+                    <th scope="col">名次</th>
+                    <th scope="col">考号</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">语文</th>
+                    <th scope="col">数学</th>
+                    <th scope="col">英语</th>
+                    <th scope="col">政治</th>
+                    <th scope="col">历史</th>
+                    <th scope="col">生物</th>
+                    <th scope="col">地理</th>
+                    <th scope="col">物理</th>
+                    <th scope="col">化学</th>
+                    <th scope="col">总分</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:with="chineseScore=0.0,mathScore=0.0,englishScore=0.0"  th:each="score:${scores}">
+                    <td th:text="${scoreStat.index+1}"></td>
+                    <td th:text="${score.examID}"></td>
+                    <td th:text="${score.name}"></td>
+                    <td th:text="${score.chinese}"></td>
+                    <td th:text="${score.mathScore}"></td>
+                    <td th:text="${score.english}"></td>
+                    <td th:text="${score.politics}"></td>
+                    <td th:text="${score.history_score}"></td>
+                    <td th:text="${score.biology}"></td>
+                    <td th:text="${score.geography}"></td>
+                    <td th:text="${score.physics}"></td>
+                    <td th:text="${score.chemistry}"></td>
+                    <th th:text="${score.chinese+score.mathScore+score.english+score.politics+score.history_score+score.biology+score.geography+score.physics+score.chemistry}"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="other" class="container tab-pane" th:classappend=" ${pageType}=='柱状图'?'active':''" ><br>
+        <h3>柱状图</h3>
+        <canvas id="BarChartCanvas" ></canvas>
+    </div>
+    <div id="importData" class="container tab-pane" th:classappend=" ${pageType}=='导入表格'?'active':''" ><br>
+        <h3>导入学生成绩</h3>
+        <div>
+            <input type="file" id="excel" name="excel" />
+            <input type="number" id="code" name="code">
+            <select class="form-select" id="exam_name" name="exam_name" th:each="exam:${exams}">
+                <option selected></option>
+                <option  th:value="${exam.exam_name}" th:text="${exam.exam_name}"></option>
+            </select>
+            <button onclick="importExcel()">导入成绩</button>
+        </div>
+    </div>
+
+
+
+
+
+    <div><span th:replace="~{index::footer}"></span></div>
+    <script th:inline="javascript">
+        const ctxbar = document.getElementById('BarChartCanvas');
+        const myChartbar = new Chart(ctxbar, {
+            type: 'bar',
+            data: [[${barResult}]],
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true //从零开始的柱状统计图
+                    }
+                },
+                responsive:true//设置是否自适应缩放
+            }
+        });
+    </script>
+</body>
+</html>
+

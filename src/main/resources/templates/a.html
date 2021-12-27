@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8"/>
+    <script src="/js/bootstrap.bundle.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/js/popper.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./js/chart.min.js"></script>
+    <script type="module" src="./js/plugin.filler.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-reboot.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="~{index::pageHeader}"></div>
+    <div class="alert alert-info" role="alert" th:text="${grade}${stu_class}成绩">
+    </div>
+    <table class="table table-info table-bordered border-primary table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">考号</th>
+            <th scope="col">姓名</th>
+            <th scope="col">语文</th>
+            <th scope="col">数学</th>
+            <th scope="col" th:if="${grade!='一年级'&&grade!='二年级'}">英语</th>
+            <th scope="col" th:if="${grade =='八年级' || grade =='九年级'}">物理</th>
+            <th scope="col" th:if="${grade =='七年级' ||grade =='八年级' || grade =='九年级'}">政治</th>
+            <th scope="col" th:if="${grade =='七年级' ||grade =='八年级' || grade =='九年级'">化学</th>
+            <th scope="col" th:if="${grade =='七年级' ||grade =='八年级' || grade =='九年级'">历史</th>
+            <th scope="col" th:if="${grade =='七年级' ||grade =='八年级' || grade =='九年级'">生物</th>
+            <th scope="col" th:if="${grade =='七年级' ||grade =='八年级' || grade =='九年级'">地理</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="$scores:${scores}">
+                <th scope="row" th:text="${scores.getExamID()}"></th>
+                <td th:text="${scores.getName()}"></td>
+                <td th:text="${scores.getChinese()}"></td>
+                <td th:text="${scores.getMathScore()}"></td>
+                <td th:text="${scores.getEnglish()}"></td>
+                <td th:text="${scores.getPhysics()}"></td>
+                <td th:text="${scores.getPolitics()}"></td>
+                <td th:text="${scores.getChemistry()}"></td>
+                <td th:text="${scores.getHistory_score()}"></td>
+                <td th:text="${scores.getBiology()}"></td>
+                <td th:text="${scores.getGeography()}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

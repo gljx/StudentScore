@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="moe.nijigen.studentscore.Pojo.Mapper.StudentMapper">
+    <select id="queryAllStudent" resultMap="StudentLog">
+        select * from student
+    </select>
+
+    <select id="queryByName" resultType="Student">
+        select * from student where student.name=#{name}
+    </select>
+
+    <insert id="addStudent" parameterMap="StudentLogParameter">
+        insert into student(uuid,stu_name,id,age,id_num,study_name,grade,class,sex,politic,paren_name,parent_phone_num,poorType,home_address_district,home_address_town,home_address_village,stay_behind,boarding,disability,fillingCard) values (#{uuid},#{stu_name},#{id},#{age},#{id_num},#{study_name},#{grade},#{class},#{sex},#{politic},#{paren_name},#{parent_phone_num},#{poorType},#{home_address_district},#{home_address_town},#{home_address_village},#{stay_behind},#{boarding},#{disability},#{fillingCard})
+    </insert>
+
+    <update id="updateStudent" parameterMap="StudentLogParameter">
+        update student(uuid,stu_name,id,age,id_num,study_name,grade,class,sex,politic,paren_name,parent_phone_num,poorType,home_address_district,home_address_town,home_address_village,stay_behind,boarding,disability,fillingCard) set  stu_name=#{stu_name},id=#{id},age=#{age},id_num=#{id_num},study_name=#{study_name},grade=#{grade},class=#{class},sex=#{sex},politic=#{politic},paren_name=#{paren_name},parent_phone_num=#{parent_phone_num},poorType=#{poorType},home_address_district=#{home_address_district},home_address_town=#{home_address_town},home_address_village=#{home_address_village},stay_behind=#{stay_behind},boarding=#{boarding},disability=#{disability},fillingCard=#{fillingCard}) where uuid=#{uuid}
+    </update>
+
+    <delete id="deleteStudednt" parameterType="String">
+        delete from student where uuid=#{uuid}
+    </delete>
+
+<resultMap id="StudentLog" type="Student">
+    <id property="UUID" column="uuid"/>
+        <result property="name" column="stu_name"/>
+        <result property="ID" column="id"/>
+        <result property="age" column="age"/>
+        <result property="idNum" column="id_num"/>
+        <result property="studyNum" column="study_num"/>
+        <result property="grade" column="grade"/>
+        <result property="Class_" column="grade"/>
+        <result property="sex" column="sex"/>
+        <result property="politic" column="politic"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="parentPhoneNum" column="parent_phone_num"/>
+        <result property="poorType" column="poorType"/>
+        <result property="homeAddressDistrict" column="home_address_district"/>
+        <result property="homeAddressTown" column="home_address_town"/>
+        <result property="homeAddressVillage" column="home_address_village"/>
+        <result property="stayBehind" column="stay_behind"/>
+        <result property="boarding" column="boarding"/>
+        <result property="disability" column="disability"/>
+        <result property="fillingCard" column="fillingCard"/>
+</resultMap>
+
+    <parameterMap id="StudentLogParameter" type="Student">
+        <parameter property="name" resultMap="StudentLog"/>
+        <parameter property="ID" resultMap="StudentLog"/>
+        <parameter property="age" resultMap="StudentLog"/>
+        <parameter property="idNum" resultMap="StudentLog"/>
+        <parameter property="studyNum" resultMap="StudentLog"/>
+        <parameter property="grade" resultMap="StudentLog"/>
+        <parameter property="Class_" resultMap="StudentLog"/>
+        <parameter property="sex" resultMap="StudentLog"/>
+        <parameter property="politic" resultMap="StudentLog"/>
+        <parameter property="parentName" resultMap="StudentLog"/>
+        <parameter property="parentPhoneNum" resultMap="StudentLog"/>
+        <parameter property="poorType" resultMap="StudentLog"/>
+        <parameter property="homeAddressDistrict" resultMap="StudentLog"/>
+        <parameter property="homeAddressTown" resultMap="StudentLog"/>
+        <parameter property="homeAddressVillage" resultMap="StudentLog"/>
+        <parameter property="stayBehind" resultMap="StudentLog"/>
+        <parameter property="boarding" resultMap="StudentLog"/>
+        <parameter property="disability" resultMap="StudentLog"/>
+        <parameter property="fillingCard" resultMap="StudentLog"/>
+    </parameterMap>
+
+
+
+</mapper>
