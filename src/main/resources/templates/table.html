@@ -1,10 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="/js/chart.min.js"></script>
-<script type="module" src="/js/plugin.filler.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="/js/chart.min.js"></script>
+    <script type="module" src="/js/plugin.filler.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script>
         function importExcel(){
             console.log("upload data");
@@ -31,7 +31,7 @@
 <body>
 <div class="container">
     <div th:replace="~{index::pageHeader}">
-</div>
+    </div>
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a class="nav-link " th:classappend=" ${pageType}=='表格'?'active':''" href="/score/list">表格显示</a>
@@ -40,85 +40,115 @@
             <a class="nav-link" th:classappend=" ${pageType}=='柱状图'?'active':''" href="/score/bar">柱状图</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"  th:classappend=" ${pageType}=='线形图'?'active':''"  href="/panel/student/query">线形图</a>
+            <a class="nav-link"  th:classappend=" ${pageType}=='线形图'?'active':''"  href="#line">线形图(开发中)</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend=" ${pageType}=='教师管理'?'active':''" href="/panel/teacher/query">教师</a>
+            <a class="nav-link" th:classappend=" ${pageType}=='饼状图'?'active':''" href="/score/radar/1">雷达图</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${pageType}=='考试管理'?'active':''"  href="/panel/exam/query">考试</a>
+            <a class="nav-link" th:classappend=" ${pageType}=='甜甜圈图'?'active':''" href="/score/doughnut">甜甜圈图</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend=" ${pageType}=='极地图'?'active':''" href="/score/polar">极地图</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend=" ${pageType}=='气泡图'?'active':''" href="/score/bubble">气泡图</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend=" ${pageType}=='散点图'?'active':''" href="/score/scatter">散点图</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend=" ${pageType}=='数据分析'?'active':''" href="#analyse">数据分析(功能开发中)</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" href="#other">其它</a>
         </li>
 
     </ul>
-    <div id="table" class="container tab-pane" th:classappend=" ${pageType}=='表格'?'active':''" ><br>
-        <div>
-            <table class="table caption-top table-striped table-Warning table-hover">
-                <caption class="display-5" th:text="${scores!=null?scores[0].examName:''}+'成绩'"></caption>
-                <thead>
-                <tr>
-                    <th scope="col">名次</th>
-                    <th scope="col">考号</th>
-                    <th scope="col">姓名</th>
-                    <th scope="col">语文</th>
-                    <th scope="col">数学</th>
-                    <th scope="col">英语</th>
-                    <th scope="col">政治</th>
-                    <th scope="col">历史</th>
-                    <th scope="col">生物</th>
-                    <th scope="col">地理</th>
-                    <th scope="col">物理</th>
-                    <th scope="col">化学</th>
-                    <th scope="col">总分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:with="chineseScore=0.0,mathScore=0.0,englishScore=0.0"  th:each="score:${scores}">
-                    <td th:text="${scoreStat.index+1}"></td>
-                    <td th:text="${score.examID}"></td>
-                    <td th:text="${score.name}"></td>
-                    <td th:text="${score.chinese}"></td>
-                    <td th:text="${score.mathScore}"></td>
-                    <td th:text="${score.english}"></td>
-                    <td th:text="${score.politics}"></td>
-                    <td th:text="${score.history_score}"></td>
-                    <td th:text="${score.biology}"></td>
-                    <td th:text="${score.geography}"></td>
-                    <td th:text="${score.physics}"></td>
-                    <td th:text="${score.chemistry}"></td>
-                    <th th:text="${score.chinese+score.mathScore+score.english+score.politics+score.history_score+score.biology+score.geography+score.physics+score.chemistry}"></th>
-                </tr>
-                </tbody>
-            </table>
+    <div class="tab-content">
+        <div id="table" class="container tab-pane" th:classappend=" ${pageType}=='表格'?'active':''" ><br>
+            <div>
+                <table class="table caption-top table-striped table-Warning table-hover">
+                    <caption class="display-5" th:text="${scores!=null?scores[0].examName:''}+'成绩'"></caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">名次</th>
+                        <th scope="col">考号</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">语文</th>
+                        <th scope="col">数学</th>
+                        <th scope="col">英语</th>
+                        <th scope="col">政治</th>
+                        <th scope="col">历史</th>
+                        <th scope="col">生物</th>
+                        <th scope="col">地理</th>
+                        <th scope="col">物理</th>
+                        <th scope="col">化学</th>
+                        <th scope="col">总分</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:with="chineseScore=0.0,mathScore=0.0,englishScore=0.0"  th:each="score:${scores}">
+                        <td th:text="${scoreStat.index+1}"></td>
+                        <td th:text="${score.examID}"></td>
+                        <td th:text="${score.name}"></td>
+                        <td th:text="${score.chinese}"></td>
+                        <td th:text="${score.mathScore}"></td>
+                        <td th:text="${score.english}"></td>
+                        <td th:text="${score.politics}"></td>
+                        <td th:text="${score.history_score}"></td>
+                        <td th:text="${score.biology}"></td>
+                        <td th:text="${score.geography}"></td>
+                        <td th:text="${score.physics}"></td>
+                        <td th:text="${score.chemistry}"></td>
+                        <th th:text="${score.chinese+score.mathScore+score.english+score.politics+score.history_score+score.biology+score.geography+score.physics+score.chemistry}"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="bar" class="container tab-pane" th:classappend=" ${pageType}=='柱状图'?'active':''" ><br>
+            <h3>柱状图</h3>
+            <canvas id="BarChartCanvas" ></canvas>
+        </div>
+        <div id="radar" class="container tab-pane" th:classappend=" ${pageType}=='雷达图'?'active':''" ><br>
+            <h3>雷达图</h3>
+            <p>平均成绩</p>
+            <div style="height: 80%">
+                <canvas id="RadarChartCanvas" width="400" height="300"></canvas>
+            </div>
+        </div>
+        <div id="polar" class="container tab-pane" th:classappend="${pageType}=='极地图'?'active':''">
+            <p>成绩分层分析</p>
+            <div style="height: 80%">
+                <canvas id="polarChartCanvas"></canvas>
+            </div>
+        </div>
+        <div id="line" class="container tab-pane">
+            <p>未开发请谅解！</p>
+            <p>你可以联系我一起开发本项目</p>
+        </div>
+        <div id="importData" class="container tab-pane" th:classappend=" ${pageType}=='导入表格'?'active':''" ><br>
+            <h3>导入学生成绩</h3>
+            <div>
+                <input type="file" id="excel" name="excel" />
+                <input type="number" id="code" name="code">
+                <select class="form-select" id="exam_name" name="exam_name" th:each="exam:${exams}">
+                    <option selected></option>
+                    <option  th:value="${exam.exam_name}" th:text="${exam.exam_name}"></option>
+                </select>
+                <button onclick="importExcel()">导入成绩</button>
+            </div>
         </div>
     </div>
-    <div id="other" class="container tab-pane" th:classappend=" ${pageType}=='柱状图'?'active':''" ><br>
-        <h3>柱状图</h3>
-        <canvas id="BarChartCanvas" ></canvas>
-    </div>
-    <div id="importData" class="container tab-pane" th:classappend=" ${pageType}=='导入表格'?'active':''" ><br>
-        <h3>导入学生成绩</h3>
-        <div>
-            <input type="file" id="excel" name="excel" />
-            <input type="number" id="code" name="code">
-            <select class="form-select" id="exam_name" name="exam_name" th:each="exam:${exams}">
-                <option selected></option>
-                <option  th:value="${exam.exam_name}" th:text="${exam.exam_name}"></option>
-            </select>
-            <button onclick="importExcel()">导入成绩</button>
-        </div>
-    </div>
-
 
 
 
 
     <div><span th:replace="~{index::footer}"></span></div>
     <script th:inline="javascript">
-        const ctxbar = document.getElementById('BarChartCanvas');
-        const myChartbar = new Chart(ctxbar, {
+        const ctxBar = document.getElementById('BarChartCanvas');
+        const BarChart = new Chart(ctxBar, {
             type: 'bar',
             data: [[${barResult}]],
             options: {
@@ -130,6 +160,26 @@
                 responsive:true//设置是否自适应缩放
             }
         });
+        const ctxRadar=document.getElementById('RadarChartCanvas');
+        const RadarChart=new Chart(ctxRadar, {
+            type: 'radar',
+            data: [[${radarResult}]],
+            options:{
+                responsive:true,
+                maintainAspectRatio: false
+            }
+
+            });
+        const ctxPolar=document.getElementById("polarChartCanvas");
+        const polarChart=new Chart(ctxPolar,{
+            type: 'polarArea',
+            data: [[${polarResult}]],
+            options:{
+                responsive:true,
+                maintainAspectRatio: false
+            }
+        });
+
     </script>
 </body>
 </html>

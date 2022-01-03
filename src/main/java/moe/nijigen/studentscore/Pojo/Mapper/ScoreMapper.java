@@ -30,7 +30,4 @@ public interface ScoreMapper {
     List<Score> queryScoreByName(@Param("name")String name);
 
     List<Score> queryScoreByID(int id);
-
-    List<Score> queryScoreByAndByExamName(@Param("id") int id,@Param("exam_name")String exam_name);
-
 }

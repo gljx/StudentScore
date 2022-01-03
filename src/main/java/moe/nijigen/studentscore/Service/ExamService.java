@@ -36,6 +36,8 @@ public class ExamService {
         return examDAO.queryByCode(code);
     }
 
-
+    public Exam queryExamByUUID(String uuid){
+        return examDAO.queryExamByUUID(uuid);
+    }
 
 }

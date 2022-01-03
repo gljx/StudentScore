@@ -1,9 +1,7 @@
 package moe.nijigen.studentscore.Controller;
 
 import lombok.ToString;
-import moe.nijigen.studentscore.ChartData.Bar;
-import moe.nijigen.studentscore.ChartData.Line;
-
+import moe.nijigen.studentscore.ChartData.*;
 import moe.nijigen.studentscore.Pojo.Exam;
 import moe.nijigen.studentscore.Pojo.Grade;
 import moe.nijigen.studentscore.Pojo.Score;
@@ -12,15 +10,12 @@ import moe.nijigen.studentscore.Service.ExamService;
 import moe.nijigen.studentscore.Service.ScoreService;
 import moe.nijigen.studentscore.Service.TeacherClassRelationService;
 import moe.nijigen.studentscore.Service.TeacherService;
-import org.apache.ibatis.annotations.Param;
+import moe.nijigen.studentscore.Utils.SubjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
-
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
@@ -75,7 +70,7 @@ public class QueryStudentScoreController {
 
     @GetMapping("/bar")
 //    @ResponseBody
-    String queryScoreAPI(Model model, HttpSession session){
+    public String queryScoreAPI(Model model, HttpSession session){
         Integer grade= (Integer) session.getAttribute("grade");
         Integer cla55= (Integer) session.getAttribute("class");
         String exam_name= (String) session.getAttribute("exam_name");
@@ -87,6 +82,43 @@ public class QueryStudentScoreController {
         //session.setAttribute("result",result);
         return "table.html";
     }
+
+    @RequestMapping(value = "/radar/{exam_uuid}")
+    public String RadarChart(@PathVariable String exam_uuid,Model model, HttpSession session){
+        System.out.println("/score/radar"+exam_uuid);
+        List<Grade>  grades = (List<Grade>) session.getAttribute("grades");//一个教师可能有多个年级多个班级的课
+        System.out.println(grades);
+        Radar resultTmp=new Radar();
+        Radar result=new Radar();
+        String exam_name= examService.queryExamByUUID(exam_uuid).getExam_name();
+        for(Grade grade : grades){
+            resultTmp=service.queryRadarChartByExamName(grade.getGrade(),grade.getClass_(),exam_name);
+            System.out.println("resultTmp\n"+resultTmp);
+            result.addDasets(resultTmp.getDatasets());
+            result.addLabels(resultTmp.getLabels());
+        }
+        model.addAttribute("pageType","雷达图");
+        model.addAttribute("radarResult",result);
+        return "table.html";
+
+    }
+
+    @RequestMapping("/polar/{exam_uuid}/{subject}")
+    public String queryPolar(@PathVariable("exam_uuid") String exam_uuid,@PathVariable("subject")String subject, Model model, HttpSession session){
+        System.out.println("/score/polar/"+exam_uuid);
+        List<Grade>  grades = (List<Grade>) session.getAttribute("grades");
+        System.out.println(grades);
+        Polar resultTmp=new Polar();
+        Polar result=new Polar();
+        String exam_name= examService.queryExamByUUID(exam_uuid).getExam_name();
+        result=service.queryPolarData(grades.get(0).getGrade(),grades.get(0).getClass_(),exam_name, SubjectUtils.parsetoSubject(subject));
+        model.addAttribute("pageType","极地图");
+        model.addAttribute("polarResult",result);
+        return "table.html";
+    }
+
+    //下面是屎山
+
 
     @RequestMapping("/{id}")
     public String queryScoreAPI(@PathVariable int id,RedirectAttributesModelMap model, HttpSession session) throws Exception {
@@ -110,5 +142,8 @@ public class QueryStudentScoreController {
         return "redirect:/table.html";
         //return "redirect:table.html"不加/ 表示跳转至 /socre/query/table.html 这个页面请求int 值 id 所以报错。
     }
+
+
+
 
 }

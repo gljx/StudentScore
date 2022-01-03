@@ -25,7 +25,6 @@ public class Score implements Comparable<Score>{
     double history_score=0.0;
     double biology=0.0;
     double geography=0.0;
-
     @Override
     public int compareTo(Score score) {
         double v =((score.getChinese() + score.getMathScore() + score.getEnglish() + score.getPhysics() + score.getPolitics() + score.getChemistry() + score.getHistory_score() + score.getBiology() + score.getGeography()) * 1000) - ((this.chinese + this.mathScore + this.english + this.physics + this.politics + this.chemistry + this.history_score + this.biology + this.geography) * 1000);

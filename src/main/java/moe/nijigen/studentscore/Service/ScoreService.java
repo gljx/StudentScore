@@ -1,7 +1,6 @@
 package moe.nijigen.studentscore.Service;
 
-import moe.nijigen.studentscore.ChartData.Bar;
-import moe.nijigen.studentscore.ChartData.Line;
+import moe.nijigen.studentscore.ChartData.*;
 import moe.nijigen.studentscore.DAO.ScoreDAO;
 import moe.nijigen.studentscore.Pojo.Score;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,8 @@ public class ScoreService {
 
             case "Line":
                 return new Line().setDatasetsOneStuSumScore(scoreDAO.queryByID(id));
-
+            case "Radar":
+                return new Radar().setDatasets(scoreDAO.queryByID(id));
             default:
                 throw new Exception("Error Type");
 
@@ -40,6 +40,10 @@ public class ScoreService {
 
     public Bar queryDiagramDataByGradeAndClass(int grade,int cla55,String exam_name){
         return new Bar().setDatasets(scoreDAO.queryClassAllStudentScore(grade,cla55,exam_name));
+    }
+
+    public Radar queryRadarChartByExamName(int garde,int cla55,String exam_name){
+        return new Radar().setDatasets(scoreDAO.queryClassAllStudentScore(garde,cla55,exam_name));
     }
 
     public List<Score> queryByGradeAndClassNameAndExamName(int grade,int cla55,String exam_name){
@@ -71,6 +75,10 @@ public class ScoreService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Polar queryPolarData(int garde, int cla55, String exam_name, Subject subject){
+        return new Polar().setDatasets(scoreDAO.queryClassAllStudentScore(garde,cla55,exam_name),subject);
     }
 
 

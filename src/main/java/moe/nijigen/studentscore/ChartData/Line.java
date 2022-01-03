@@ -14,6 +14,10 @@ import java.util.*;
 @ToString
 public class Line {
 
+    List<String> labels=new ArrayList<>();//横坐标
+
+    List<Line.data> datasets=new ArrayList<>();
+
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
@@ -90,9 +94,7 @@ public class Line {
 
 
     }
-    List<String> labels=new ArrayList<>();//横坐标
 
-    List<Line.data> datasets=new ArrayList<>();
 
     public Line setLabels(List<String> labels) {
         this.labels = labels;

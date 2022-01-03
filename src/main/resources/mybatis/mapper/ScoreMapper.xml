@@ -36,11 +36,11 @@
     </select>
 
     <select id="queryScoreByID" resultType="Score" resultMap="scoreLog" parameterType="Integer">
-        select * from score where id=#{id}
+        select * from score where examID=#{id}
     </select>
 
     <select id="queryScoreByAndByExamName" resultType="Score" resultMap="scoreLog">
-        select * from score where id=#{id} and exam_name=#{exam_name}
+        select * from score where examID=#{id} and exam_name=#{exam_name}
     </select>
 
     <select id="queryAllScore" resultType="Score" resultMap="scoreLog">

@@ -20,4 +20,6 @@ public interface ExamMapper {
     int updateExam(String UUID,Exam exam);
 
     List<Exam> queryExamByCode(@Param("code")int code);
+
+    Exam queryExamByUUID(@Param("UUID")String uuid);
 }

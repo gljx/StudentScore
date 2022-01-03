@@ -22,6 +22,6 @@ public class MyMvcConfig implements WebMvcConfigurer{
 //                .excludePathPatterns("/","/index.html","/css/*","/js/*","/login");
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/","/index.html","/login","/adminlog");//新版springboot不会拦截静态资源
+                .excludePathPatterns("/","/index.html","/login","/adminlog","/static/*","/js/*","/css/*");//新版springboot不会拦截静态资源,放你妈的屁！
     }
 }

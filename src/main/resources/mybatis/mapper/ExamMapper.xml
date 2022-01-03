@@ -31,4 +31,8 @@
     <select id="queryExamByCode" resultMap="exam_nameLog" resultType="Exam">
         select * from examname where code=#{code}
     </select>
+
+    <select id="queryExamByUUID" resultMap="exam_nameLog" resultType="Exam">
+        select * from examname where UUID=#{UUID}
+    </select>
 </mapper>

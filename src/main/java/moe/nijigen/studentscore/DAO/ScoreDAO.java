@@ -56,6 +56,8 @@ public class ScoreDAO {
         return scoreMapper.queryClassAllStudentScoreByExamName(exam_name,grade);
     }
 
+
+
     public List<Score> queryAllScore(){
         return scoreMapper.queryAllScore();
     }

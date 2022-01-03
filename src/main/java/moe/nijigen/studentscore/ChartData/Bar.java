@@ -16,6 +16,11 @@ import java.util.List;
 @ToString
 public class Bar {
 
+    List<String> labels=new ArrayList<>();
+
+    List<data> datasets=new ArrayList<>();
+
+
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
@@ -67,9 +72,7 @@ public class Bar {
 
     }
 
-    List<String> labels=new ArrayList<>();
 
-    List<data> datasets=new ArrayList<>();
 
     public Bar setDatasets(List<Score> scores,int limit) {
         if (3 > scores.get(0).getGrade()) {//一二年级没有英语

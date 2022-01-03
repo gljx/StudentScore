@@ -21,4 +21,5 @@ public interface GradeMapper {
 
     public List<Grade> queryByTeacherUUID(@Param("TeacherUUID")String TeacherUUID);
 
+
 }
